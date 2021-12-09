@@ -41,7 +41,7 @@ public class InterfaceUsuario {
         System.out.println("=======================================================");
         System.out.println("Voce ira informar qual arquivo contem a listagem dos" +
                            "\nativos a serem analisados para montagem do portfolio.");
-        System.out.println("\tObs1: O arquivo de ser no formato .csv;");
+        System.out.println("\tObs1: O arquivo deve ser no formato .csv;");
         System.out.println("\tObs2: Nao digitar a extensao do arquivo;");
         System.out.println("\tObs3: Arquivo deve estar na pasta raiz do projeto;");
         System.out.println("Digite o nome do arquivo selecionado:");
