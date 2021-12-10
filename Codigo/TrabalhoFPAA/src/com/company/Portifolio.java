@@ -5,7 +5,7 @@ public class Portifolio {
 
     public double totalDividendo(String nomeAtivo){
     double Dt = 0.0;
-    for(Ativo s: Ativos){
+    for(RegistroAtivo s: Ativos){
         if (nomeAtivo== s.getNome()){
             Dt = Dt+s.getDividendo();
         }
@@ -15,7 +15,7 @@ public class Portifolio {
 
     public double encontrarVenda(String nomeAtivo){
         double precoVenda = 0.0;
-        for(Ativo s: Ativos){
+        for(RegistroAtivo s: Ativos){
             if (nomeAtivo== s.getNome()){
                 precoVenda = s.getValor(); "duvida se e preco"
             }
@@ -26,7 +26,7 @@ public class Portifolio {
     public double encontrarCompra(String nomeAtivo){
         double precoCompra = 0.0;
         int contador = 0;
-        for(Ativo s: Ativos){
+        for(RegistroAtivo s: Ativos){
             if (nomeAtivo== s.getNome()){
                 if (contador ==0){
                     precoCompra=s.getPreco();
@@ -43,7 +43,7 @@ public class Portifolio {
         double dt;
         double re;
 
-        pv =encontrarVenda(nomeAtivo);
+        pv = encontrarVenda(nomeAtivo);
         dt = totalDividendo(nomeAtivo);
         pc = encontrarCompra(nomeAtivo);
 
@@ -56,7 +56,7 @@ public class Portifolio {
     double precototal=0.0;
     int cont=0;
     double retornoesperado;
-    for(Ativo s: Ativos) {
+    for(RegistroAtivo s: Ativos) {
         if (nomeAtivo == s.getNome()) {
             precototal = precototal + s.getPreco();
             cont=cont+1;
@@ -69,7 +69,7 @@ public class Portifolio {
     public void varianciaAbsolutaPreco(String nomeAtivo){
         double precoAntigo = 0;
         double precoAtual = 0;
-        for(Ativo s: Ativos) {
+        for(RegistroAtivo s: Ativos) {
             if (nomeAtivo == s.getNome()) {
                precoAtual=s.getPreco();
                 s.setVariancia(Math.abs(precoAtual-precoAntigo));
@@ -83,7 +83,7 @@ public class Portifolio {
         double dp = 0;
         double cont = 0;
         double varianciatotal = 0;
-        for(Ativo s: Ativos) {
+        for(RegistroAtivo s: Ativos) {
             if (nomeAtivo == s.getNome()) {
                 varianciatotal = varianciatotal + s.getVariancia();
                 cont=cont+1;

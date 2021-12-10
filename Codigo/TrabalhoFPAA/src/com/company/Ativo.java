@@ -1,14 +1,24 @@
 package com.company;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 public class Ativo {
 
     private String nome;
-    private Date data;
-    private double preco;
-    private double valor;
-    private double dividendo;
+    private double precoFinal;
+    private double precoInicial;
+    private double dividendoTotal;
+    private int qtdeRegistros;
+    private double retornoEfetivo;
+    private double retornoEsperado;
+    private double desvioPadraoPreco;
+    private double riscoNormalizado;
+    private double riscoRetorno;
+    private ArrayList<RegistroAtivo> registros = new ArrayList();
+
+    public void addRegistros(RegistroAtivo registro){
+        registros.add(registro);
+    }
 
     public String getNome() {
         return nome;
@@ -18,35 +28,75 @@ public class Ativo {
         this.nome = nome;
     }
 
-    public Date getData() {
-        return data;
+    public double getPrecoFinal() {
+        return precoFinal;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setPrecoFinal(double precoFinal) {
+        this.precoFinal = precoFinal;
     }
 
-    public double getPreco() {
-        return preco;
+    public double getPrecoInicial() {
+        return precoInicial;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setPrecoInicial(double precoInicial) {
+        this.precoInicial = precoInicial;
     }
 
-    public double getValor() {
-        return valor;
+    public double getDividendoTotal() {
+        return dividendoTotal;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setDividendoTotal(double dividendoTotal) {
+        this.dividendoTotal = dividendoTotal;
     }
 
-    public double getDividendo() {
-        return dividendo;
+    public int getQtdeRegistros() {
+        return qtdeRegistros;
     }
 
-    public void setDividendo(double dividendo) {
-        this.dividendo = dividendo;
+    public void setQtdeRegistros(int qtdeRegistros) {
+        this.qtdeRegistros = qtdeRegistros;
+    }
+
+    public double getRetornoEfetivo() {
+        return retornoEfetivo;
+    }
+
+    public void setRetornoEfetivo(double retornoEfetivo) {
+        this.retornoEfetivo = retornoEfetivo;
+    }
+
+    public double getRetornoEsperado() {
+        return retornoEsperado;
+    }
+
+    public void setRetornoEsperado(double retornoEsperado) {
+        this.retornoEsperado = retornoEsperado;
+    }
+
+    public double getDesvioPadraoPreco() {
+        return desvioPadraoPreco;
+    }
+
+    public void setDesvioPadraoPreco(double desvioPadraoPreco) {
+        this.desvioPadraoPreco = desvioPadraoPreco;
+    }
+
+    public double getRiscoNormalizado() {
+        return riscoNormalizado;
+    }
+
+    public void setRiscoNormalizado(double riscoNormalizado) {
+        this.riscoNormalizado = riscoNormalizado;
+    }
+
+    public double getRiscoRetorno() {
+        return riscoRetorno;
+    }
+
+    public void setRiscoRetorno(double riscoRetorno) {
+        this.riscoRetorno = riscoRetorno;
     }
 }

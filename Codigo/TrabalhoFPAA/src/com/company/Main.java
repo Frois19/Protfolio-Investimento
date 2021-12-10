@@ -8,12 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 	// write your code here
-        //InterfaceUsuario interfaceUsuario = new InterfaceUsuario();
-        //interfaceUsuario.homePage();
-        Double precoFinal;
-        String preco = "0.64";
-        precoFinal = Double.parseDouble(preco);
-        System.out.println(precoFinal+1.0);
+        InterfaceUsuario interfaceUsuario = new InterfaceUsuario();
+        interfaceUsuario.homePage();
 
     }
 }
