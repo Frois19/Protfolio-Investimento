@@ -11,6 +11,14 @@ public class RegistroAtivo {
     private double dividendo;
     private double variancia;
 
+    public RegistroAtivo(String nome, Date data, double preco, double valor, double dividendo) {
+        this.nome = nome;
+        this.data = data;
+        this.preco = preco;
+        this.valor = valor;
+        this.dividendo = dividendo;
+    }
+
     public String getNome() {
         return nome;
     }
