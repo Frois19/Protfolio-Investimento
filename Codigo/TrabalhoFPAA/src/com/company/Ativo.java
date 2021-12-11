@@ -14,6 +14,10 @@ public class Ativo {
     private double desvioPadraoPreco;
     private double riscoNormalizado;
     private double riscoRetorno;
+
+
+
+    private double peso;
     private ArrayList<RegistroAtivo> registros = new ArrayList();
 
     public void addRegistros(RegistroAtivo registro){
@@ -166,4 +170,13 @@ public class Ativo {
     public void setRiscoRetorno(double riscoRetorno) {
         this.riscoRetorno = riscoRetorno;
     }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
 }
+
