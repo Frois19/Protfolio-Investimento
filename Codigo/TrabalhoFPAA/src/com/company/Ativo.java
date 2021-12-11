@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Ativo {
 
     private String nome;
-    private double precoFinal;
-    private double precoInicial;
+    private double precoVenda;
+    private double precoCompra;
     private double dividendoTotal;
     private int qtdeRegistros;
     private double retornoEfetivo;
@@ -20,6 +20,73 @@ public class Ativo {
         registros.add(registro);
     }
 
+
+    public void totalDividendo(){
+        double Dt = 0.0;
+        for(RegistroAtivo s: registros){
+            Dt = Dt+s.getDividendo();
+        }
+        setDividendoTotal(Dt);
+    }
+
+    public void encontrarPrecoVenda(){
+        setPrecoCompra(registros.get(registros.size()-1).getPreco());
+    }
+
+    public void encontrarPrecoCompra(){
+        setPrecoCompra(registros.get(0).getPreco());
+    }
+
+    public void calcularRetornoEfetivo(String nomeAtivo){
+        double dt = getDividendoTotal();
+        double pv = getPrecoVenda();
+        double pc = getPrecoCompra();
+
+        setRetornoEfetivo((pv+dt-pc)/pc);
+    }
+
+
+    public void retornoEsperado(){
+        double precototal=0.0;
+        int cont=0;
+
+        for(RegistroAtivo s: registros) {
+                precototal = precototal + s.getPreco();
+                cont=cont+1;
+        }
+        setRetornoEfetivo(precototal/cont);
+    }
+
+    public void varianciaAbsolutaPreco(){
+        double precoAntigo=registros.get(0).getPreco();
+        double precoAtual;
+
+        for(RegistroAtivo s: registros) {
+            precoAtual=s.getPreco();
+            s.setVariancia(Math.abs(precoAtual-precoAntigo));
+            precoAntigo=s.getPreco();
+        }
+    }
+
+    public void desvioPadraopreco(){
+        double cont = 0;
+        double varianciatotal = 0;
+
+        for(RegistroAtivo s: registros) {
+                varianciatotal = varianciatotal + s.getVariancia();
+                cont=cont+1;
+        }
+        setDesvioPadraoPreco(varianciatotal/cont);
+    }
+
+    public void riscoNormalizado(){
+        setRiscoNormalizado(getDesvioPadraoPreco()/getRetornoEsperado());
+    }
+
+    public void riscoRetorno(){
+        setRiscoRetorno(getRiscoNormalizado()/getRetornoEsperado());
+    }
+
     public String getNome() {
         return nome;
     }
@@ -28,20 +95,20 @@ public class Ativo {
         this.nome = nome;
     }
 
-    public double getPrecoFinal() {
-        return precoFinal;
+    public double getPrecoVenda() {
+        return precoVenda;
     }
 
-    public void setPrecoFinal(double precoFinal) {
-        this.precoFinal = precoFinal;
+    public void setPrecoVenda(double precoVenda) {
+        this.precoVenda = precoVenda;
     }
 
-    public double getPrecoInicial() {
-        return precoInicial;
+    public double getPrecoCompra() {
+        return precoCompra;
     }
 
-    public void setPrecoInicial(double precoInicial) {
-        this.precoInicial = precoInicial;
+    public void setPrecoCompra(double precoCompra) {
+        this.precoCompra = precoCompra;
     }
 
     public double getDividendoTotal() {
