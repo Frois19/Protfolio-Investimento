@@ -46,19 +46,18 @@ public class Portifolio {
         int i = 1;
         for(Ativo a: ativos){
             System.out.println("Ativo" + i + ":"+
-                    "\n\tNome" + a.getNome() +
-                    "\n\tPreco Venda" + a.getPrecoVenda() +
-                    "\n\tPreco Compra" + a.getPrecoCompra() +
-                    "\n\tDividendo Total" + a.getDividendoTotal() +
-                    "\n\tRetorno Efetivo" + a.getRetornoEfetivo() +
-                    "\n\tRetorno Esperado" + a.getRetornoEsperado() +
-                    "\n\tDesvio Padrao Preco" + a.getDesvioPadraoPreco() +
-                    "\n\tRisco Normalizado" + a.getRiscoNormalizado() +
-                    "\n\tRisco Retorno" + a.getRiscoRetorno() +
-                    "\n\tPeso" + a.getPeso() +
-                    "\n\tQuantidade de registros" + a.getQtdeRegistros()
+                    "\n\tNome: " + a.getNome() +
+                    "\n\tPreco Venda: " + a.getPrecoVenda() +
+                    "\n\tPreco Compra: " + a.getPrecoCompra() +
+                    "\n\tDividendo Total: " + a.getDividendoTotal() +
+                    "\n\tRetorno Efetivo: " + a.getRetornoEfetivo() +
+                    "\n\tRetorno Esperado: " + a.getRetornoEsperado() +
+                    "\n\tDesvio Padrao Preco: " + a.getDesvioPadraoPreco() +
+                    "\n\tRisco Normalizado :" + a.getRiscoNormalizado() +
+                    "\n\tRisco Retorno: " + a.getRiscoRetorno() +
+                    "\n\tPeso: " + a.getPeso() +
+                    "\n\tQuantidade de registros: " + a.getQtdeRegistros()
             );
-            a.printarRegistros();
             i++;
         }
     }
