@@ -107,23 +107,36 @@ public class Ativo {
     }
 
     public void calcularVarianciaAbsolutaPreco(){
+        double precoAntigo = registros.get(0).getPreco();
+        double precoAtual;
 
         for(RegistroAtivo s: registros) {
-            s.setVariancia(s.getPreco() - retornoEsperado);
-        }
+            precoAtual = s.getPreco();
+            s.setVariancia(precoAtual-precoAntigo);
+            precoAntigo = s.getPreco();
+              }
 
 
     }
 
     public void calcularDesvioPadraopreco(){
-        double cont = 0;
+
         double varianciatotal = 0;
+        double mediaVariancia;
+        double aux = 0;
+        int tamanho = registros.size()-1;
 
         for(RegistroAtivo s: registros) {
-                varianciatotal = varianciatotal + (s.getVariancia()*s.getVariancia());
-                cont=cont+1;
+                varianciatotal = varianciatotal + Math.abs(s.getVariancia());
+
         }
-        setDesvioPadraoPreco(Math.sqrt(varianciatotal/cont));
+
+        mediaVariancia = varianciatotal/tamanho;
+
+        for(RegistroAtivo s: registros) {
+            aux = aux + Math.pow(s.getVariancia() - mediaVariancia,2);
+        }
+        setDesvioPadraoPreco(Math.sqrt(aux/tamanho));
         System.out.println(desvioPadraoPreco + " - desvioPadrao");
     }
 

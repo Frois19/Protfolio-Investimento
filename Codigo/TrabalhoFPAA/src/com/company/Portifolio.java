@@ -107,25 +107,41 @@ public class Portifolio {
 
     public void algoritmoGuloso() {
         double riscoRetornoTotal=0.0;
-        for(Ativo s: ativos){
-            riscoRetornoTotal=riscoRetornoTotal+s.getRiscoRetorno();
+        double menorRiscoRetorno = 0.0;
+
+
+        for(Ativo s: ativos) {
+            if (s.getRiscoRetorno()>0) {
+                riscoRetornoTotal = riscoRetornoTotal + 1-s.getRiscoRetorno();
+                System.out.println(riscoRetornoTotal + " " + s.getRiscoRetorno());
+            } else{
+                s.setPeso(0);
+            }
         }
+
+
         for(Ativo s: ativos){
-            s.setPeso(1-(s.getRiscoRetorno()/riscoRetornoTotal));
-        }
-    }
+            if(s.getRiscoRetorno()>0) {
+            s.setPeso((1-s.getRiscoRetorno())/ riscoRetornoTotal);
+            }
+    }}
 
     public void algoritmoAleatorio(){
         int quantidodeAtivos = ativos.size();
-
-        int numaleatorio=0;
+        double numaleatorio=0.0000;
+        int cont = 0;
+        double pesoFinal;
         ArrayList<Integer> numerosAleatorio = new ArrayList();
-        for (int i=0;i<=quantidodeAtivos;i++){
-            numerosAleatorio.add(new Random().nextInt(100) + 1);
+        for (int i=0;i<quantidodeAtivos;i++){
+            numerosAleatorio.add(new Random().nextInt(99) + 1);
             numaleatorio+= numerosAleatorio.get(i);
+            System.out.println(numaleatorio);
         }
-        for(int i=0;i<=quantidodeAtivos;i++){
-            ativos.get(i).setPeso(numerosAleatorio.get(i)/numaleatorio);
+        for(Ativo s: ativos){
+            pesoFinal = numerosAleatorio.get(cont)/numaleatorio;
+            s.setPeso(pesoFinal);
+            System.out.println(numerosAleatorio.get(cont));
+            cont++;
         }
 
     }
@@ -151,6 +167,16 @@ public class Portifolio {
     public void calcularDadosdosAtivos(){
         for(Ativo s: ativos){
             s.calcularParametros();
+        }
+        algoritmoGuloso();
+        for(Ativo s: ativos){
+            System.out.println("pesos" + s.getPeso());
+        }
+
+        algoritmoAleatorio();
+
+        for(Ativo s: ativos){
+            System.out.println("\npesos" + s.getPeso());
         }
     }
 
