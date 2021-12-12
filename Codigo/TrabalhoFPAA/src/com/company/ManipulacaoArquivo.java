@@ -9,18 +9,11 @@ import java.util.Date;
 
 public class ManipulacaoArquivo {
 
+    //Função para leitura do arquivo indicado pelo parametro
     public void lerArquivo(String nomeArquivo) throws IOException, ParseException {
-        //Criando portifolio
-        Portifolio portifolio = new Portifolio();
-        //Variavel para controlar o campo que esta sendo lido na linha do arquivo
-        int contador = 0;
-        //Strings para armazenas os campos lidos no arquivo
-        String nomeArq = "";
-        String dataArq = "";
-        String precoArq = "";
-        String valorArq = "";
-        String dividendoArq = "";
-        //Variaveis para converção das strings lidas nos arquivos
+        //Criando portfolio para armazenar os registros do arquivo
+        Portifolio portfolio = new Portifolio();
+        //Variaveis para receber valores campos do arquivo
         String nome;
         Date data;
         double preco;
@@ -35,56 +28,24 @@ public class ManipulacaoArquivo {
         linha = buffRead.readLine(); //pulando primeira linha (cabeçalho do arquivo)
         while (true) {
             if (linha != null) {
-                //Leitura caracter por caracter da linha atual
-                for (int i=0; i<linha.length(); i++){
-                    char c = linha.charAt(i); //recebendo caracter atual
-                    if (c == ','){ //caractere que separa os campos em uma linha
-                        //Incrementando contador para a leitura do proximo campo
-                        contador++;
-                    }
-                    else if (c == '\n'){ //caractere que sinaliza o final de uma linha
-                        //Resetando contador para ler a proxima linha
-                        contador = 0;
-                        //Convertendo string recebidas para os formatos corretos
-                        nome = nomeArq;
-                        data = formato.parse(dataArq);
-                        preco = Double.parseDouble(precoArq);
-                        valor = Double.parseDouble(valorArq);
-                        dividendo = Double.parseDouble(dividendoArq);
-                        //Criando registro com as variaveis coletadas
-                        RegistroAtivo registro = new RegistroAtivo(nome, data, preco, valor, dividendo);
-                        //Adicionando regitro ao portifolio
-                        portifolio.addRegistros(registro);
-                        //Zerando variaveis para ler a proxima linha
-                        nomeArq = "";
-                        dataArq = "";
-                        precoArq = "";
-                        valorArq = "";
-                        dividendoArq = "";
-                    } else {
-                        switch (contador){
-                            case 0: //Concatenando caracteres referentes ao nome
-                                nomeArq = nomeArq.concat(Character.toString(c));
-                                break;
-                            case 1: //Concatenando caracteres referentes a data
-                                dataArq = dataArq.concat(Character.toString(c));
-                                break;
-                            case 2: //Concatenando caracteres referentes ao preco
-                                precoArq = precoArq.concat(Character.toString(c));
-                                break;
-                            case 3: //Concatenando caracteres referentes ao valor
-                                valorArq = valorArq.concat(Character.toString(c));
-                                break;
-                            case 4: //Concatenando caracteres referentes ao dividendo
-                                dividendoArq = dividendoArq.concat(Character.toString(c));
-                                break;
-                        }
-                    }
-                }
+                //Lendo campos da linha deparados por ','
+                String[] parts = linha.split(",");
+                //Convertendo string recebidas para os formatos corretos
+                nome = parts[0];
+                data = formato.parse(parts[1]);
+                preco = Double.parseDouble(parts[2]);
+                valor = Double.parseDouble(parts[3]);
+                dividendo = Double.parseDouble(parts[4]);
+                //Criando registro de ativo e adicionando no portifolio
+                RegistroAtivo registro = new RegistroAtivo(nome, data, preco, valor, dividendo);
+                portfolio.addRegistros(registro);
             } else
                 break;
             linha = buffRead.readLine(); //ler a proxima linha
         }
         buffRead.close(); //fechando arquivo
+        portfolio.sortRegistrosName();
+        portfolio.popularRegistrosAtivos();
+        portfolio.printarAtivos();
     }
 }

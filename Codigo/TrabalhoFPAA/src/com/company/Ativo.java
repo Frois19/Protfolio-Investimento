@@ -1,6 +1,8 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Ativo {
 
@@ -14,16 +16,38 @@ public class Ativo {
     private double desvioPadraoPreco;
     private double riscoNormalizado;
     private double riscoRetorno;
-
-
-
     private double peso;
-    private ArrayList<RegistroAtivo> registros = new ArrayList();
-
+    public ArrayList<RegistroAtivo> registros = new ArrayList();
+    //Construtor utilizado na classe portifolio para popular o array
+    public Ativo(String nome) {
+        this.nome = nome;
+    }
+    //Função para adicionar um novo registro no Array
     public void addRegistros(RegistroAtivo registro){
         registros.add(registro);
     }
-
+    //Função para ordenar o array com base na data dos ativos
+    public void sortRegistrosData(){
+        Collections.sort(registros, new Comparator<RegistroAtivo>(){
+            public int compare(RegistroAtivo o1, RegistroAtivo o2)
+            {
+                return o1.getData().compareTo(o2.getData());
+            }
+        });
+    }
+    public void printarRegistros(){
+        int i = 1;
+        for(RegistroAtivo r: registros){
+            System.out.println("Registro " + i + ":" +
+                    "\n\tNome:" + r.getNome() +
+                    "\n\tData:" + r.getData() +
+                    "\n\tPreco:" + r.getPreco() +
+                    "\n\tValor:" + r.getValor() +
+                    "\n\tDividendo:" + r.getDividendo()
+            );
+            i++;
+        }
+    }
 
     public void totalDividendo(){
         double Dt = 0.0;

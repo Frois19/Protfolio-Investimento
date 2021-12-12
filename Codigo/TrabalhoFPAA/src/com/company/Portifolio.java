@@ -1,30 +1,123 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Portifolio {
-
-    private ArrayList<Ativo> Ativos = new ArrayList();
-
-    private ArrayList<RegistroAtivo> registros = new ArrayList();
-
+    //Array de ativos
+    public ArrayList<Ativo> ativos = new ArrayList();
+    //Array com todos os registros registros
+    public ArrayList<RegistroAtivo> registros = new ArrayList();
+    //Função para adicionar um novo registro no Array
     public void addRegistros(RegistroAtivo registro){
         registros.add(registro);
+    }
+    //Função para ordenar o array com base no nome dos ativos
+    public void sortRegistrosName(){
+        Collections.sort(registros, new Comparator<RegistroAtivo>(){
+            public int compare(RegistroAtivo o1, RegistroAtivo o2)
+            {
+                return o1.getNome().compareTo(o2.getNome());
+            }
+        });
+    }
+    //Função para adicionar ativos no Array
+    public void addAtivos(Ativo ativo){
+        ativos.add(ativo);
+    }
+    //Função para printar o Array de registros - utilizada para alguns testas na construção do algoritmo
+    public void printarRegistros(){
+        int i = 1;
+        for(RegistroAtivo r: registros){
+            System.out.println("Registro " + i + ":" +
+                    "\n\tNome:" + r.getNome() +
+                    "\n\tData:" + r.getData() +
+                    "\n\tPreco:" + r.getPreco() +
+                    "\n\tValor:" + r.getValor() +
+                    "\n\tDividendo:" + r.getDividendo()
+            );
+            i++;
+        }
+    }
+    //Função para printar o Array de ativos - utilizada para alguns testas na construção do algoritmo
+    public void printarAtivos(){
+        int i = 1;
+        for(Ativo a: ativos){
+            System.out.println("Ativo" + i + ":"+
+                    "\n\tNome" + a.getNome() +
+                    "\n\tPreco Venda" + a.getPrecoVenda() +
+                    "\n\tPreco Compra" + a.getPrecoCompra() +
+                    "\n\tDividendo Total" + a.getDividendoTotal() +
+                    "\n\tRetorno Efetivo" + a.getRetornoEfetivo() +
+                    "\n\tRetorno Esperado" + a.getRetornoEsperado() +
+                    "\n\tDesvio Padrao Preco" + a.getDesvioPadraoPreco() +
+                    "\n\tRisco Normalizado" + a.getRiscoNormalizado() +
+                    "\n\tRisco Retorno" + a.getRiscoRetorno() +
+                    "\n\tPeso" + a.getPeso() +
+                    "\n\tQuantidade de registros" + a.getQtdeRegistros()
+            );
+            a.printarRegistros();
+            i++;
+        }
+    }
+    //Função para popular o array de registros de um determinado ativo
+    public void popularRegistrosAtivos(){
+        int i = 1;
+        int contador = 0;
+        String nomeAnterior = "";
+        ArrayList<Integer> qtdeRegistrosPorAtivo = new ArrayList();
+        ArrayList<String> nomeAtivos = new ArrayList();
+        for(RegistroAtivo r: registros){
+            if (i == 1){
+                nomeAnterior = r.getNome();
+            } else {
+                if (nomeAnterior.equals(r.getNome())){
+                    contador++;
+                } else{
+                    qtdeRegistrosPorAtivo.add(contador+1);
+                    nomeAtivos.add(nomeAnterior);
+                    contador = 0;
+                }
+            }
+            nomeAnterior = r.getNome();
+            i++;
+        }
+
+        for (i = 0; i < nomeAtivos.size(); i++){
+            Ativo ativo = new Ativo(nomeAtivos.get(i));
+            ativos.add(ativo);
+        }
+
+        i = 0;
+        int j = 0;
+        for(RegistroAtivo r: registros){
+            ativos.get(j).addRegistros(r);
+            if( i == qtdeRegistrosPorAtivo.get(j)-1){
+                ativos.get(j).sortRegistrosData();
+                j++;
+                i = -1;
+                if (j > qtdeRegistrosPorAtivo.size()-1){
+                    break;
+                }
+            }
+            i++;
+        }
     }
 
     public void algoritmoGuloso() {
         double riscoRetornoTotal=0.0;
-        for(Ativo s: Ativos){
+        for(Ativo s: ativos){
             riscoRetornoTotal=riscoRetornoTotal+s.getRiscoRetorno();
         }
-        for(Ativo s: Ativos){
+        for(Ativo s: ativos){
             s.setPeso(1-(s.getRiscoRetorno()/riscoRetornoTotal));
         }
     }
 
     public void algoritmoAleatorio(){
-        int quantidodeAtivos = Ativos.size();
+        int quantidodeAtivos = ativos.size();
 
         int numaleatorio=0;
         ArrayList<Integer> numerosAleatorio = new ArrayList();
@@ -33,7 +126,7 @@ public class Portifolio {
             numaleatorio+= numerosAleatorio.get(i);
         }
         for(int i=0;i<=quantidodeAtivos;i++){
-            Ativos.get(i).setPeso(numerosAleatorio.get(i)/numaleatorio);
+            ativos.get(i).setPeso(numerosAleatorio.get(i)/numaleatorio);
         }
 
     }
@@ -41,9 +134,9 @@ public class Portifolio {
     public void algoritmoForcaBruta(){
         double limitePeso=0.0;
         double maiorRiscoRetorno = 0.0;
-        double menorRiscoRetorno = Ativos.get(0).getRiscoRetorno();
+        double menorRiscoRetorno = ativos.get(0).getRiscoRetorno();
 
-        for(Ativo s: Ativos){
+        for(Ativo s: ativos){
             if(s.getRiscoRetorno()>maiorRiscoRetorno){
                 maiorRiscoRetorno = s.getRiscoRetorno();
             }
@@ -54,125 +147,6 @@ public class Portifolio {
         while (menorRiscoRetorno*limitePeso<maiorRiscoRetorno*0.01){
             limitePeso+=0.01;
         }
-
-
-
-
-
     }
 
-
-
-
 }
-
-
-
-
-//    public double totalDividendo(String nomeAtivo){
-//    double Dt = 0.0;
-//    for(RegistroAtivo s: Ativos){
-//        if (nomeAtivo== s.getNome()){
-//            Dt = Dt+s.getDividendo();
-//        }
-//    }
-//    return Dt;
-//}
-//
-//    public double encontrarVenda(String nomeAtivo){
-//        double precoVenda = 0.0;
-//        for(RegistroAtivo s: Ativos){
-//            if (nomeAtivo== s.getNome()){
-//                precoVenda = s.getValor(); "duvida se e preco"
-//            }
-//        }
-//        return precoVenda;
-//    }
-//
-//    public double encontrarCompra(String nomeAtivo){
-//        double precoCompra = 0.0;
-//        int contador = 0;
-//        for(RegistroAtivo s: Ativos){
-//            if (nomeAtivo== s.getNome()){
-//                if (contador ==0){
-//                    precoCompra=s.getPreco();
-//                    contador++;
-//                }
-//            }
-//        }
-//        return precoCompra;
-//    }
-//
-//    public double calcularRetornoEfetivo(String nomeAtivo){
-//        double pv;
-//        double pc;
-//        double dt;
-//        double re;
-//
-//        pv = encontrarVenda(nomeAtivo);
-//        dt = totalDividendo(nomeAtivo);
-//        pc = encontrarCompra(nomeAtivo);
-//
-//        re = (pv+dt-pc)/pc;
-//        return re;
-//    }
-//
-//
-//    public double retornoEsperado(String nomeAtivo){ "média preco"
-//    double precototal=0.0;
-//    int cont=0;
-//    double retornoesperado;
-//    for(RegistroAtivo s: Ativos) {
-//        if (nomeAtivo == s.getNome()) {
-//            precototal = precototal + s.getPreco();
-//            cont=cont+1;
-//        }
-//    }
-//    retornoesperado = precototal/cont;
-//    return retornoesperado;
-//    }
-//
-//    public void varianciaAbsolutaPreco(String nomeAtivo){
-//        double precoAntigo = 0;
-//        double precoAtual = 0;
-//        for(RegistroAtivo s: Ativos) {
-//            if (nomeAtivo == s.getNome()) {
-//               precoAtual=s.getPreco();
-//                s.setVariancia(Math.abs(precoAtual-precoAntigo));
-//                precoAntigo=s.getPreco();
-//
-//            }
-//        }
-//    }
-//
-//    public double desvioPadraopreco(String nomeAtivo){
-//        double dp = 0;
-//        double cont = 0;
-//        double varianciatotal = 0;
-//        for(RegistroAtivo s: Ativos) {
-//            if (nomeAtivo == s.getNome()) {
-//                varianciatotal = varianciatotal + s.getVariancia();
-//                cont=cont+1;
-//            }
-//        }
-//        dp = varianciatotal/cont;
-//        return dp;
-//    }
-//
-//    public double riscoNormalizado(String nomeAtivo){
-//        double retornoEsperado = retornoEsperado(nomeAtivo);
-//        double desvioPadrao = desvioPadraopreco(nomeAtivo);
-//        double riscoNormalizado;
-//        riscoNormalizado = desvioPadrao/mediaPreco;
-//        return riscoNormalizado; "porcentagem"
-//    }
-//
-//    public double riscoRetorno(String nomeAtivo ){
-//
-//        double risconormalizado = riscoNormalizado(nomeAtivo);
-//        double retornoEsperado = retornoEsperado(nomeAtivo);
-//
-//        double riscoretorno = risconormalizado/retornoEsperado;
-//
-//        return riscoretorno;
-  }

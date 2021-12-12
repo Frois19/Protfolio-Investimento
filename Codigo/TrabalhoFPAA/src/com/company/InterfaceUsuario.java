@@ -1,12 +1,14 @@
 package com.company;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class InterfaceUsuario {
 
     Scanner ler = new Scanner(System.in);
 
-    public void homePage(){
+    public void homePage() throws IOException, ParseException {
         int opc = 0;
         System.out.println("=======================================================");
         System.out.println("       CONSTRUICAO DE PORTFOLIO DE INVESTIMENTO");
@@ -35,7 +37,7 @@ public class InterfaceUsuario {
         homePage();
     }
 
-    public void selecaoArquivoPage(){
+    public void selecaoArquivoPage() throws IOException, ParseException {
         int opc = 0;
         String nomeArquivo;
         System.out.println("=======================================================");
@@ -73,8 +75,9 @@ public class InterfaceUsuario {
         }
     }
 
-    public void analisePage(String nomeArquivo){
+    public void analisePage(String nomeArquivo) throws IOException, ParseException {
         //função de ler arquivo
-
+        ManipulacaoArquivo arq = new ManipulacaoArquivo();
+        arq.lerArquivo(nomeArquivo);
     }
 }
