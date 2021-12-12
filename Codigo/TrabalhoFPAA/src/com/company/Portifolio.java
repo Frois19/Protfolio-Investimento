@@ -148,4 +148,12 @@ public class Portifolio {
         }
     }
 
+    public void calcularDadosdosAtivos(){
+        for(Ativo s: ativos){
+            s.calcularParametros();
+        }
+    }
+
+
+
 }

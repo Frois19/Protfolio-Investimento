@@ -35,6 +35,9 @@ public class Ativo {
             }
         });
     }
+
+
+
     public void printarRegistros(){
         int i = 1;
         for(RegistroAtivo r: registros){
@@ -49,32 +52,49 @@ public class Ativo {
         }
     }
 
+    public void calcularParametros(){
+        encontrarPrecoCompra();
+        encontrarPrecoVenda();
+        totalDividendo();
+        calcularRetornoEfetivo();
+        calcularRetornoEsperado();
+        calcularVarianciaAbsolutaPreco();
+        calcularDesvioPadraopreco();
+        calcularRiscoNormalizado();
+        calcularRiscoRetorno();
+        }
+
     public void totalDividendo(){
         double Dt = 0.0;
         for(RegistroAtivo s: registros){
             Dt = Dt+s.getDividendo();
         }
+        System.out.println(Dt + " - dividendo total");
         setDividendoTotal(Dt);
     }
 
     public void encontrarPrecoVenda(){
-        setPrecoCompra(registros.get(registros.size()-1).getPreco());
+        setPrecoVenda(registros.get(registros.size()-1).getPreco());
+        System.out.println(precoVenda + " - preco Venda");
     }
 
     public void encontrarPrecoCompra(){
         setPrecoCompra(registros.get(0).getPreco());
+        System.out.println(precoCompra + " - preco Compra");
     }
 
-    public void calcularRetornoEfetivo(String nomeAtivo){
+    public void calcularRetornoEfetivo(){
         double dt = getDividendoTotal();
         double pv = getPrecoVenda();
         double pc = getPrecoCompra();
 
         setRetornoEfetivo((pv+dt-pc)/pc);
+
+        System.out.println(retornoEfetivo + " - retorno efetivo");
     }
 
 
-    public void retornoEsperado(){
+    public void calcularRetornoEsperado(){
         double precototal=0.0;
         int cont=0;
 
@@ -82,37 +102,39 @@ public class Ativo {
                 precototal = precototal + s.getPreco();
                 cont=cont+1;
         }
-        setRetornoEfetivo(precototal/cont);
+        setRetornoEsperado(precototal/cont);
+        System.out.println(retornoEsperado + " - retorno esperado");
     }
 
-    public void varianciaAbsolutaPreco(){
-        double precoAntigo=registros.get(0).getPreco();
-        double precoAtual;
+    public void calcularVarianciaAbsolutaPreco(){
 
         for(RegistroAtivo s: registros) {
-            precoAtual=s.getPreco();
-            s.setVariancia(Math.abs(precoAtual-precoAntigo));
-            precoAntigo=s.getPreco();
+            s.setVariancia(s.getPreco() - retornoEsperado);
         }
+
+
     }
 
-    public void desvioPadraopreco(){
+    public void calcularDesvioPadraopreco(){
         double cont = 0;
         double varianciatotal = 0;
 
         for(RegistroAtivo s: registros) {
-                varianciatotal = varianciatotal + s.getVariancia();
+                varianciatotal = varianciatotal + (s.getVariancia()*s.getVariancia());
                 cont=cont+1;
         }
-        setDesvioPadraoPreco(varianciatotal/cont);
+        setDesvioPadraoPreco(Math.sqrt(varianciatotal/cont));
+        System.out.println(desvioPadraoPreco + " - desvioPadrao");
     }
 
-    public void riscoNormalizado(){
+    public void calcularRiscoNormalizado(){
         setRiscoNormalizado(getDesvioPadraoPreco()/getRetornoEsperado());
+        System.out.println(riscoNormalizado + " - risco normalizado");
     }
 
-    public void riscoRetorno(){
-        setRiscoRetorno(getRiscoNormalizado()/getRetornoEsperado());
+    public void calcularRiscoRetorno(){
+        setRiscoRetorno(getRiscoNormalizado()/getRetornoEfetivo());
+        System.out.println(riscoRetorno + " - riscoRetorno");
     }
 
     public String getNome() {

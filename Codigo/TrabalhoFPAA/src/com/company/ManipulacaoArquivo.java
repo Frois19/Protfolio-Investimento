@@ -46,5 +46,6 @@ public class ManipulacaoArquivo {
         buffRead.close(); //fechando arquivo
         portfolio.sortRegistrosName();
         portfolio.popularRegistrosAtivos();
+        portfolio.calcularDadosdosAtivos(); //adicionei para testaar
     }
 }
