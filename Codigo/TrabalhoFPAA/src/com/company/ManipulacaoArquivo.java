@@ -10,7 +10,7 @@ import java.util.Date;
 public class ManipulacaoArquivo {
 
     //Função para leitura do arquivo indicado pelo parametro
-    public void lerArquivo(String nomeArquivo) throws IOException, ParseException {
+    public Portifolio lerArquivo(String nomeArquivo) throws IOException, ParseException {
         //Criando portfolio para armazenar os registros do arquivo
         Portifolio portfolio = new Portifolio();
         //Variaveis para receber valores campos do arquivo
@@ -44,8 +44,9 @@ public class ManipulacaoArquivo {
             linha = buffRead.readLine(); //ler a proxima linha
         }
         buffRead.close(); //fechando arquivo
-        portfolio.sortRegistrosName();
-        portfolio.popularRegistrosAtivos();
-        portfolio.calcularDadosdosAtivos(); //adicionei para testaar
+        portfolio.sortRegistrosName(); //Ordenar array com base no nome dos ativos
+        portfolio.popularRegistrosAtivos(); //Popular Arrays dos ativos
+        portfolio.calcularDadosdosAtivos(); //Calcular valores dos ativos
+        return portfolio;
     }
 }

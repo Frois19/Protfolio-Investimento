@@ -78,6 +78,8 @@ public class InterfaceUsuario {
     public void analisePage(String nomeArquivo) throws IOException, ParseException {
         //função de ler arquivo
         ManipulacaoArquivo arq = new ManipulacaoArquivo();
-        arq.lerArquivo(nomeArquivo);
+        Portifolio portifolio = arq.lerArquivo(nomeArquivo);
+        portifolio.calcularDadosdosAtivos();
+        portifolio.gerarPortifolio();
     }
 }

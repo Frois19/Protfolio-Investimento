@@ -104,50 +104,46 @@ public class Portifolio {
             i++;
         }
     }
-
+    //Analise do portifolio ateves do algoritmo guloso
     public void algoritmoGuloso() {
-        double riscoRetornoTotal=0.0;
+        double riscoRetornoTotal = 0.0;
         double menorRiscoRetorno = 0.0;
-
 
         for(Ativo s: ativos) {
             if (s.getRiscoRetorno()>0) {
                 riscoRetornoTotal = riscoRetornoTotal + 1-s.getRiscoRetorno();
-                System.out.println(riscoRetornoTotal + " " + s.getRiscoRetorno());
             } else{
                 s.setPeso(0);
             }
         }
 
-
         for(Ativo s: ativos){
             if(s.getRiscoRetorno()>0) {
-            s.setPeso((1-s.getRiscoRetorno())/ riscoRetornoTotal);
+                s.setPeso((1-s.getRiscoRetorno())/ riscoRetornoTotal);
             }
-    }}
-
+        }
+    }
+    //Analise do portifolio ateves do algoritmo aleatorio
     public void algoritmoAleatorio(){
         int quantidodeAtivos = ativos.size();
-        double numaleatorio=0.0000;
+        double numaleatorio = 0.0000;
         int cont = 0;
         double pesoFinal;
         ArrayList<Integer> numerosAleatorio = new ArrayList();
         for (int i=0;i<quantidodeAtivos;i++){
             numerosAleatorio.add(new Random().nextInt(99) + 1);
             numaleatorio+= numerosAleatorio.get(i);
-            System.out.println(numaleatorio);
         }
         for(Ativo s: ativos){
             pesoFinal = numerosAleatorio.get(cont)/numaleatorio;
             s.setPeso(pesoFinal);
-            System.out.println(numerosAleatorio.get(cont));
             cont++;
         }
 
     }
-
+    //Analise do portifolio ateves do algoritmo de força bruta
     public void algoritmoForcaBruta(){
-        double limitePeso=0.0;
+        double limitePeso = 0.0;
         double maiorRiscoRetorno = 0.0;
         double menorRiscoRetorno = ativos.get(0).getRiscoRetorno();
 
@@ -163,20 +159,32 @@ public class Portifolio {
             limitePeso+=0.01;
         }
     }
-
+    //Função para cacular os dados dos ativos com base nos registros
     public void calcularDadosdosAtivos(){
         for(Ativo s: ativos){
             s.calcularParametros();
+            s.setQtdeRegistros(s.registros.size());
         }
+    }
+    //Função para chamar as funções de analise do portifolio
+    public void gerarPortifolio(){
+        int i = 1;
+        System.out.println("=======================================================");
+        System.out.println("                   Algoritimo Guloso");
+        System.out.println("=======================================================");
         algoritmoGuloso();
         for(Ativo s: ativos){
-            System.out.println("pesos" + s.getPeso());
+            s.printarAtivo(i);
+            i++;
         }
-
+        System.out.println("=======================================================");
+        System.out.println("                 Algoritimo Aleatorio");
+        System.out.println("=======================================================");
         algoritmoAleatorio();
-
+        i = 1;
         for(Ativo s: ativos){
-            System.out.println("\npesos" + s.getPeso());
+            s.printarAtivo(i);
+            i++;
         }
     }
 

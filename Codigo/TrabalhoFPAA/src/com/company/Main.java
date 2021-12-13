@@ -9,6 +9,5 @@ public class Main {
     public static void main(String[] args) throws ParseException, IOException {
         InterfaceUsuario interfaceUsuario = new InterfaceUsuario();
         interfaceUsuario.homePage();
-        
     }
 }
