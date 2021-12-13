@@ -143,9 +143,15 @@ public class Portifolio {
     }
     //Analise do portifolio ateves do algoritmo de força bruta
     public void algoritmoForcaBruta(){
-        double limitePeso = 0.0;
+        //Chegamos em um ponto que não conseguimos progredir, mas a ideia era testar tadas as combinações
+        //entre os pessos que resultassem em 100% dos recursos investidos entre os ativos e ir salvando
+        //o valor do menor risco dentre as opções possiveis.
+        double limitePesoSuperior=0.0;
+        double limitePesoInferior =0.2;
         double maiorRiscoRetorno = 0.0;
         double menorRiscoRetorno = ativos.get(0).getRiscoRetorno();
+        double resultado;
+        double melhorResultado;
 
         for(Ativo s: ativos){
             if(s.getRiscoRetorno()>maiorRiscoRetorno){
@@ -155,9 +161,42 @@ public class Portifolio {
                 menorRiscoRetorno = s.getRiscoRetorno();
             }
         }
-        while (menorRiscoRetorno*limitePeso<maiorRiscoRetorno*0.01){
-            limitePeso+=0.01;
+        while (menorRiscoRetorno*limitePesoSuperior<maiorRiscoRetorno*0.01){
+            limitePesoSuperior+=0.01;
         }
+        while (menorRiscoRetorno*0.17>maiorRiscoRetorno*limitePesoInferior){
+            limitePesoInferior-=0.01;
+        }
+        /*
+        for(double i = limitePesoInferior; i<limitePesoSuperior; i++){
+            ativos.get(0).setPeso(i);
+            for(double j = limitePesoInferior; i<limitePesoSuperior; i++){
+                ativos.get(1).setPeso(i);
+                for(double k = limitePesoInferior; i<limitePesoSuperior; i++){
+                    ativos.get(2).setPeso(i);
+                    for(double l = limitePesoInferior; i<limitePesoSuperior; i++){
+                        ativos.get(3).setPeso(i);
+                        for(double m = limitePesoInferior; i<limitePesoSuperior; i++){
+                            ativos.get(4).setPeso(i);
+                            for(double n = limitePesoInferior; i<limitePesoSuperior; i++){
+                                ativos.get(5).setPeso(i);
+                                for(double o = limitePesoInferior; i<limitePesoSuperior; i++) {
+                                    ativos.get(6).setPeso(i);
+                                    for (double p = limitePesoInferior; i < limitePesoSuperior; i++) {
+                                        ativos.get(7).setPeso(i);
+                                        for (double p = limitePesoInferior; i < limitePesoSuperior; i++) {
+                                            ativos.get(8).setPeso(i);
+                                            resultado = ativos.get(0).getPeso()*ativos.get();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        */
     }
     //Função para cacular os dados dos ativos com base nos registros
     public void calcularDadosdosAtivos(){
@@ -187,7 +226,4 @@ public class Portifolio {
             i++;
         }
     }
-
-
-
 }
